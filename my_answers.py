@@ -19,8 +19,8 @@ def window_transform_series(series, window_size):
         X.append(item)
         
         y_index = secondIdx
-        if y_index < len(series):
-            y.append(series[y_index])
+        #if y_index < len(series):
+        y.append(series[y_index])
             
     # reshape each
     X = np.asarray(X)
