@@ -13,14 +13,14 @@ def window_transform_series(series, window_size):
     X = []
     y = []
     
-    for idx, val in enumerate(series):
+    for idx in range(0, len(series) - window_size):
         secondIdx = idx + window_size
         item = series[idx:secondIdx]
         X.append(item)
         
         y_index = secondIdx
-        #if y_index < len(series):
-        y.append(series[y_index])
+        if y_index < len(series):
+            y.append(series[y_index])
             
     # reshape each
     X = np.asarray(X)
@@ -32,7 +32,10 @@ def window_transform_series(series, window_size):
 
 # TODO: build an RNN to perform regression on our time series input/output data
 def build_part1_RNN(window_size):
-    pass
+    model = Sequential()
+    model.add(LSTM(5, input_shape=(window_size, 1)))
+    model.add(Dense(1))
+    return model
 
 
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
