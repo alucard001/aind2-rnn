@@ -5,6 +5,7 @@ from keras.layers import Dense, Activation
 from keras.layers import LSTM
 import keras
 
+import string
 
 # TODO: fill out the function below that transforms the input series 
 # and window-size into a set of input/output pairs for use with our RNN model
@@ -39,14 +40,15 @@ def build_part1_RNN(window_size):
 
 
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
+# https://stackoverflow.com/questions/5640630/array-filter-in-python
 def cleaned_text(text):
-    punctuation = ['!', ',', '.', ':', ';', '?', '-', '(', ')', '+', '-', '*', '/', '\\', '_', '[', ']', '{', '}', '\'', '"', '|', '<', '>', '?', '`', '~', '@', '#', '$', '%', '^', '&']
-
-    for p in punctuation:
-        text = text.replace(p, ' ')
+    punctuation = ['!', ',', '.', ':', ';', '?']
+    allowedChars = set(list(string.ascii_lowercase) + punctuation)
     
-    text = text.lower()
-    
+    for t in text:
+        if t not in allowedChars:
+            text = text.replace(t, ' ')
+        
     return text
 
 ### TODO: fill out the function below that transforms the input text and window-size into a set of input/output pairs for use with our RNN model
@@ -54,20 +56,15 @@ def window_transform_text(text, window_size, step_size):
     # containers for input/output pairs
     inputs = []
     outputs = []
+          
+    lastIdx = window_size
+    
+    while(lastIdx < len(text)):
+        inputs.append(text[lastIdx - window_size:lastIdx])
+        outputs.append(text[lastIdx])
+        lastIdx += step_size
 
-    for idx in range(0, len(text) - window_size):
-        
-        new_idx_after_calculating_step_size = idx + step_size
-        
-        secondIdx = new_idx_after_calculating_step_size + window_size
-        item = text[new_idx_after_calculating_step_size:secondIdx]
-        
-        outputs_index = secondIdx
-        if outputs_index < len(text):
-            inputs.append(item)
-            outputs.append(text[outputs_index])
-
-    return list(inputs), list(outputs)
+    return inputs, outputs
 
 # TODO build the required RNN model: 
 # a single LSTM hidden layer with softmax activation, categorical_crossentropy loss 

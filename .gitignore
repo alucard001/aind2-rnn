@@ -16,3 +16,9 @@ __pycache__/
 .venv
 venv/
 ENV/
+
+*.zip
+*.json
+.udacity-pa
+RNN_project.html
+.floyd*
