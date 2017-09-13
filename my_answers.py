@@ -61,10 +61,10 @@ def window_transform_text(text, window_size, step_size):
         
         secondIdx = new_idx_after_calculating_step_size + window_size
         item = text[new_idx_after_calculating_step_size:secondIdx]
-        inputs.append(item)
         
         outputs_index = secondIdx
         if outputs_index < len(text):
+            inputs.append(item)
             outputs.append(text[outputs_index])
 
     return list(inputs), list(outputs)
