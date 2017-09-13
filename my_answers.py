@@ -57,7 +57,7 @@ def window_transform_text(text, window_size, step_size):
 
     for idx in range(0, len(text) - window_size):
         
-        new_idx_after_calculating_step_size = idx * step_size
+        new_idx_after_calculating_step_size = idx + step_size
         
         secondIdx = new_idx_after_calculating_step_size + window_size
         item = text[new_idx_after_calculating_step_size:secondIdx]
